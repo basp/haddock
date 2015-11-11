@@ -10,7 +10,7 @@ below:
 
 The actual moving parts are described below:
 
-* `random_curse` is a function that returns some tokens that when combine
+* `random_curse` is a function that returns some tokens that when combined
 make up a somewhat absurd curse towards a singular thing.
 
 ## Examples
