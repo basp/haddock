@@ -50,9 +50,8 @@ nouns = [
 ]
 
 def random_curse():
-	ai, ni = random.randint(0, 100), random.randint(0, 100)
-	ai = ai % len(adjectives)
-	ni = ni % len(nouns)
+	ai = random.randint(0, len(adjectives) - 1)
+	ni = random.randint(0, len(nouns) - 1)
 	return [adjectives[ai], nouns[ni]]
 	
 if __name__ == '__main__':
