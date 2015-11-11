@@ -65,8 +65,17 @@ def random_curse():
 	ai = random.randint(0, len(adjectives) - 1)
 	ni = random.randint(0, len(nouns) - 1)
 	return [adjectives[ai], nouns[ni]]
+
+def random_curse2():
+	ai1 = random.randint(0, len(adjectives) - 1)
+	ai2 = random.randint(0, len(adjectives) - 1)
+	while ai2 == ai1:
+		ai2 = random.randint(0, len(adjectives) - 1)
+	ni = random.randint(0, len(nouns) - 1)
+	return [adjectives[ai1], adjectives[ai2], nouns[ni]]
 	
 if __name__ == '__main__':
-	curse = random_curse()
+	curse = random_curse2()
 	msg = 'Haddock yells: %s!' % ' '.join(curse)
 	print(msg)
+ 
