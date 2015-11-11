@@ -12,7 +12,6 @@ adjectives = [
 	'fancy-dress',
 	'cyclotron',
 	'miserable molecule of a',
-	'black',
 	'freshwater',
 	'lily-livered',
 	'meddlesome',
