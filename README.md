@@ -32,3 +32,8 @@ play around with it) if you get the tokens and not a packed string.
 ## TODO
 * Create good database of vocab.
 * Over-engineer
+* Publish npm and various other formats
+* Create community
+* Create startup
+* Make web API
+* Get rich
