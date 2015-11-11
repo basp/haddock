@@ -28,3 +28,7 @@ some kind of effects (like coloring) on them.
 
 As an aside, it's also much easier to inspect and test the function (and 
 play around with it) if you get the tokens and not a packed string.
+
+## TODO
+* Create good database of vocab.
+* Over-engineer
