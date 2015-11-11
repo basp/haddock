@@ -11,10 +11,23 @@ adjectives = [
 	'interplanetary',
 	'fancy-dress',
 	'cyclotron',
-	'miserable molecule of a'	
+	'miserable molecule of a',
+	'black',
+	'freshwater',
+	'lily-livered',
+	'meddlesome',
+	'macrocephalic',
+	'pestilential',
+	'pithecanthropic',
+	'raggle taggle',
+	'squawking',
+	'scoffing'
 ]
 
 nouns = [
+	'bootlegger',
+	'bath-tub',
+	'breathalyser',
 	'pirate',
 	'doryphore'
 	'gobbledygook',
@@ -56,5 +69,5 @@ def random_curse():
 	
 if __name__ == '__main__':
 	curse = random_curse()
-	msg = 'Haddock yells: %s' % ' '.join(curse)
+	msg = 'Haddock yells: %s!' % ' '.join(curse)
 	print(msg)
