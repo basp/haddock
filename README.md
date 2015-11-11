@@ -1,5 +1,13 @@
 ## Haddock
-Intellectual swearing for intellectual beards.
+Intellectual swearing for intellectual beards. Haddock tries to make swearing 
+fun again. For too long we have been stuck in the same sequence of swear words
+over and over again. 
+
+Haddock is here to remind you of some awesome swear words
+and you can look smart in the process as well by using words that are either
+extremely obscure or just plain made up.
+
+Be prepared to amaze your peers with some *dunderheaded* *misguided* swearing.
 
 ## Architecture
 Haddock is based on a rock solid foundation. The various parts are described
