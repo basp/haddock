@@ -16,6 +16,11 @@ _codemap = dict(
 
 def _prep(text):
 	def replace(m):
+		# Escape, should move this code
+		prev = m.start() - 1
+		if prev >= 0 and prev < len(text):
+			if text[prev] == '%': return m.group()
+	
 		code = m.group(1)
 		return _codemap[code] if code in _codemap else m.group()
 	
@@ -23,7 +28,7 @@ def _prep(text):
 	return re.sub(pat, replace, text)
 
 def sub(text, **kwargs):
-	def replace(m):
+	def replace(m):			  
 		[obj, attr] = m.groups()	
 		if not obj in kwargs:
 			return m.group()
@@ -73,7 +78,7 @@ class Sword(object):
 		elif self.prefix:
 			return '%s sword' % (self.prefix)
 		elif self.suffix:
-			return 'sword %s' % (self.suffix)
+			return 'sword %s' % ( self.suffix)
 		else:
 			return 'sword'
 
@@ -83,7 +88,7 @@ if __name__ == '__main__':
 	who = Player('Nanira', 'she', 'her')
 	dobj = Survivor(prefix='rotting')
 	iobj = Sword(prefix='sexy', suffix='of hotpantses')
-	text = '[o%%P]<blue>%(who.name)</> attacks <red>%(dobj.dname)</> with %p <green>%(iobj.name)</>!'
+	text = '[o%%p]<blue>%(who.name)</> attacks <red>%(dobj.dname)</> with %p <green>%(iobj.name)</>!'
 	msg = sub(text, who=who, dobj=dobj, iobj=iobj)
 	msg = style(msg)
 	print(msg)
