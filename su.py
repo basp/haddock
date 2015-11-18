@@ -19,7 +19,7 @@ def _prep(text):
 		# Escape, should move this code
 		prev = m.start() - 1
 		if prev >= 0 and prev < len(text):
-			if text[prev] == '%': return m.group()
+			if text[prev] == '%': return m.group()[1:]
 	
 		code = m.group(1)
 		return _codemap[code] if code in _codemap else m.group()
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 	who = Player('Nanira', 'she', 'her')
 	dobj = Survivor(prefix='rotting')
 	iobj = Sword(prefix='sexy', suffix='of hotpantses')
-	text = '[o%%p]<blue>%(who.name)</> attacks <red>%(dobj.dname)</> with %p <green>%(iobj.name)</>!'
+	text = '[o%%%p]<blue>%(who.name)</> attacks <red>%(dobj.dname)</> with %p <green>%(iobj.name)</>!'
 	msg = sub(text, who=who, dobj=dobj, iobj=iobj)
 	msg = style(msg)
 	print(msg)
