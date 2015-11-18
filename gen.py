@@ -58,6 +58,8 @@ def top_scorers(scores):
 		if s >= top_score:
 			top_score = s
 			yield p
+		else:
+			break
 				
 def find_candidates(f, m):
 	for y in range(len(m)):
@@ -67,7 +69,7 @@ def find_candidates(f, m):
 			if s > 0: 
 				yield (s, p)
 
-# This assumes a valid position
+# This assumes a valid position (e.g. overlapping exit(s) and/or walls)
 def place(f, p, m):
 	rows = len(f)
 	for i in range(rows):
@@ -96,33 +98,58 @@ def place(f, p, m):
 				# Replace map tile with feature tile
 				m[y][x] = f[i][j]		
 
-def print_map(m):
+def try_place_feature(f, m):
+	scores = list(find_candidates(f, m))
+	if len(scores) == 0:
+		return False, None
+	best = list(top_scorers(scores))
+	pos = random.choice(best)
+	place(f, pos, m)
+	return True, pos
+
+def print_map(m, hide_dirt = False):
 	for y in range(len(m)):
-		print(''.join(m[y]))	
+		r = ''.join(m[y])
+		if hide_dirt: r = r.replace('~', ' ')
+		print(r)	
 
 f1 = [
-	['#', 'X', '#', 'X', '#'],
-	['X', '.', '.', '.', 'X'],
+	['#', '#', 'X', '#', '#'],
 	['#', '.', '.', '.', '#'],
 	['X', '.', '.', '.', 'X'],
-	['#', 'X', '#', 'X', '#']]
+	['#', '.', '.', '.', '#'],
+	['#', '#', 'X', '#', '#']]
 	
 f2 = [
-	['#', '#', '#', '#', '#', '#', '#', '#', '#'],
+	['#', '#', 'X', '#', '#', '#', 'X', '#', '#'],
 	['X', '.', '.', '.', '.', '.', '.', '.', 'X'],
-	['#', '#', '#', '#', '#', '#', '#', '#', '#']]
+	['#', '#', 'X', '#', '#', '#', 'X', '#', '#']]
 
-features = [f1, f2]
-	
+f3 = [
+	['~', '~', '~', '#', 'X', '#', '~', '~', '~'],
+	['~', '#', '#', '#', '.', '#', '#', '#', '~'],
+	['~', '#', '.', '.', '.', '.', '.', '#', '~'],
+	['#', '#', '.', '.', '.', '.', '.', '#', '#'],
+	['#', '.', '.', '.', '.', '.', '.', '.', '#'],
+	['X', '.', '.', '.', '.', '.', '.', '.', 'X'],
+	['#', '.', '.', '.', '.', '.', '.', '.', '#'],
+	['#', '#', '.', '.', '.', '.', '.', '#', '#'],
+	['~', '#', '.', '.', '.', '.', '.', '#', '~'],
+	['~', '#', '#', '#', '.', '#', '#', '#', '~'],
+	['~', '~', '~', '#', 'X', '#', '~', '~', '~']]
+
 WIDTH = 80
 HEIGHT = 25
 
 level = [['~' for x in range(WIDTH)] for y in range(HEIGHT)]
+
+# Seed the map with a room containing at least one exit
 place(f1, (5, 5), level)
 
-scores = find_candidates(f2, level)
-top = top_scorers(scores)
-pos = random.choice(list(top))
-place(f2, pos, level)
+features = [f1, f1, f2, f2, rotate(f2), f3]
+for x in range(10):
+	f = random.choice(features)
+	ok, pos = try_place_feature(f, level)
+	if not ok: print('error placing feature') 
 
-print_map(level)
+print_map(level, True)
