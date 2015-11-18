@@ -1,5 +1,8 @@
 import random
 
+WIDTH = 80
+HEIGHT = 25
+
 def rotate(m):
 	return zip(*m[::-1])
 	
@@ -108,10 +111,31 @@ def try_place_feature(f, m):
 	return True, pos
 
 def print_map(m, hide_dirt = False):
-	for y in range(len(m)):
+	rows = len(m)
+	for y in range(rows):
 		r = ''.join(m[y])
 		if hide_dirt: r = r.replace('~', ' ')
 		print(r)	
+		
+def remove_redundant_exits(m):
+	rows = len(m)
+	for y in range(rows):
+		cols = len(m[y])
+		for x in range(cols):
+			if m[y][x] == 'D' or m[y][x] == 'X':
+				if y == 0 or y == len(m) - 1:
+					# Make any top or bottom edge tiles walls
+					m[y][x] = '#'
+				elif x == 0 or x == len(m[y]) - 1:
+					# Make any left or right edge tiles walls
+					m[y][x] = '#'
+				elif m[y - 1][x] == '.' and m[y + 1][x] == '.':
+					
+					continue
+				elif m[y][x - 1] == '.' and m[y][x + 1] == '.':
+					continue
+				else:
+					m[y][x] = '#'
 
 f1 = [
 	['#', '#', 'X', '#', '#'],
@@ -138,18 +162,54 @@ f3 = [
 	['~', '#', '#', '#', '.', '#', '#', '#', '~'],
 	['~', '~', '~', '#', 'X', '#', '~', '~', '~']]
 
-WIDTH = 80
-HEIGHT = 25
+f4 = [
+	['#', '#', 'X', '#', '#'],
+	['#', '.', '.', '.', '#'],
+	['#', '.', '.', '.', '#'],
+	['X', '.', '.', '.', 'X'],
+	['#', '.', '.', '.', '#'],
+	['#', '.', '.', '.', '#'],
+	['#', '#', 'X', '#', '#']]
+	
+f5 = [
+	['#', '#', '#'],
+	['#', '.', 'X'],
+	['#', '.', '#'],
+	['#', '.', '#'],
+	['#', '.', '#'],
+	['#', '.', '#'],
+	['#', '.', '#'],
+	['X', '.', '#'],
+	['#', '#', '#']]	
+
+f6 = [
+	['#', 'X', '#'],
+	['#', '.', '#'],
+	['#', '.', 'X'],
+	['#', '.', '#'],
+	['#', '.', '#'],
+	['#', '.', '#'],
+	['X', '.', 'X'],
+	['#', '.', '#'],
+	['#', 'X', '#']]	
+
 
 level = [['~' for x in range(WIDTH)] for y in range(HEIGHT)]
 
 # Seed the map with a room containing at least one exit
 place(f1, (5, 5), level)
 
-features = [f1, f1, f2, f2, rotate(f2), f3]
-for x in range(10):
+# If we can't fit a feature it goes here
+failures = []
+
+# Add some number of features (or try at least)
+features = [f1, f2, f3, f4, f5, f6]
+NUM_FEATURES = 20
+for x in range(NUM_FEATURES):
 	f = random.choice(features)
 	ok, pos = try_place_feature(f, level)
-	if not ok: print('error placing feature') 
+	if not ok:
+		failures.append(f) 
 
 print_map(level, True)
+print("failed features: %d" % len(failures))
