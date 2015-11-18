@@ -7,6 +7,9 @@ def rotate(m):
 	return zip(*m[::-1])
 	
 def score(f, p, m):
+	# We are pessimistic here and assume the feature will be 
+	# Guilty unless proven innocent! The checks below will 
+	# have to flag it once they hit dirt (see below).
 	overlapping_feature = True
 	s = 0
 	rows = len(f)
@@ -197,13 +200,13 @@ f6 = [
 level = [['~' for x in range(WIDTH)] for y in range(HEIGHT)]
 
 # Seed the map with a room containing at least one exit
-place(f1, (5, 5), level)
+place(f5, (10, 10), level)
 
 # If we can't fit a feature it goes here
 failures = []
 
 # Add some number of features (or try at least)
-features = [f1, f2, f3, f4, f5, f6]
+features = [f1, f1, f5, rotate(f5), f6, rotate(f6)]
 NUM_FEATURES = 20
 for x in range(NUM_FEATURES):
 	f = random.choice(features)
