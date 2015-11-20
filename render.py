@@ -32,3 +32,4 @@ import re
 # Instruction format: <style(obj[.attr] /> or it can also be a <style(obj[.attr]> to </antyhing_goes_here>
 # The first one will just execute the render function, replace the rendering tag and pop the stack.
 # The second one will execute the render function and will pop the stack when it encounters the end tag.
+
