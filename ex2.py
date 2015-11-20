@@ -15,7 +15,8 @@ libtcod.console_init_root(WIDTH, HEIGHT, 'Ex2', False)
 
 # con = libtcod.console_new(WIDTH, HEIGHT)
 
-emitter = Emitter() 
+pos = 0, 0
+emitter = Emitter(pos) 
 
 while not libtcod.console_is_window_closed():
 	libtcod.console_clear(0)
